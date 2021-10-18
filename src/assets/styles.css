@@ -1,0 +1,70 @@
+#obot-spy-dialog {
+  background: #111a21;
+  /* border: none; */
+  border-color: #000;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 800px;
+  z-index: 999;
+  box-shadow: 10px 10px 15px black;
+}
+
+#obot-spy-content {
+  max-height: 75vh;
+  overflow-y: scroll;
+}
+
+.obot-spy-btn {
+  border-radius: 6px;
+}
+
+.obot-remove-btn {
+  width: 26px;
+  height: 26px;
+}
+
+.obot-remove-btn:hover {
+  opacity: 0.5;
+}
+
+#target-spy-table > thead > tr > td {
+  font-weight: 700;
+}
+
+#target-spy-table tr > td {
+  padding: 5px;
+}
+
+#target-spy-table > tbody > tr:nth-of-type(odd) {
+  background: #20303d;
+}
+
+#target-spy-table tr > td:last-of-type {
+  text-align: end;
+}
+
+#obot-spy-actions {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+#obot-spy-actions > button {
+  background: url('//gf3.geo.gfsrv.net/cdneb/f5f81e8302aaad56c958c033677fb8.png') -374px -258px no-repeat;
+  height: 29px;
+  text-align: center;
+  line-height: 25px;
+  width: 136px;
+  color: #fff;
+}
+
+.red-color {
+  color: #cf3e3e !important;
+}
+
+#obot-spy-actions > button:hover {
+  background-position: -374px -287px;
+}
