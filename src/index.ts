@@ -42,6 +42,21 @@ $('#obot-spy-dialog').on('click', '.obot-spy-btn', (e) => {
   sendSpyProbe(coordinates, '', index);
 });
 
+$('#obot-spy-dialog').on('click', '#obot-target-name', async () => {
+  await sortByPlayer();
+  $('#obot-spy-content').html(await renderTable());
+});
+
+$('#obot-spy-dialog').on('click', '#obot-target-coords', async () => {
+  await sortByCoords();
+  $('#obot-spy-content').html(await renderTable());
+});
+
+$('#obot-spy-dialog').on('click', '#obot-target-scan', async () => {
+  await sortByScan();
+  $('#obot-spy-content').html(await renderTable());
+});
+
 function renderSpyDialog() {
   return `
     <dialog id="obot-spy-dialog">
@@ -59,10 +74,10 @@ async function renderTable(): Promise<string> {
     <table id="target-spy-table" style="width: 100%">
       <thead>
         <tr>
-          <td>#</td>
-          <td>Player</td>
-          <td>Coordinates</td>
-          <td>Last scan</td>
+          <td id="obot-target-id">#</td>
+          <td id="obot-target-name">Player</td>
+          <td id="obot-target-coords">Coordinates</td>
+          <td id="obot-target-scan">Last scan</td>
           <td>Actions</td>
         </tr>
       </thead>
@@ -111,7 +126,7 @@ function sendSpyProbe(coordinates: string, token: string, index: number) {
 
         sendSpyProbe(coordinates, newToken, index);
       } else {
-        const lastScanField = $(`#target-spy-table > tbody > tr:nth-of-type(${index + 1}) > td:nth-of-type(3)`);
+        const lastScanField = $(`#target-spy-table > tbody > tr:nth-of-type(${index + 1}) > td:nth-of-type(4)`);
         lastScanField.css('color', 'green');
         lastScanField.text(new Date().toLocaleString());
 
@@ -130,4 +145,51 @@ async function updateSpyTarget(index: number) {
 
 async function clearTargetList() {
   await removeStorageByKey('obot-stored_coordinates');
+}
+
+async function sortByPlayer() {
+  const targets = (await getStorageByKey('obot-stored_coordinates')) as Target[];
+  targets.sort((a, b) => a.name.localeCompare(b.name));
+
+  await setStorageByKey('obot-stored_coordinates', targets);
+}
+
+async function sortByCoords() {
+  const targets = (await getStorageByKey('obot-stored_coordinates')) as Target[];
+  targets.sort((a, b) => {
+    if (a.coordinates[0] < b.coordinates[0]) {
+      return -1;
+    }
+
+    if (a.coordinates[0] > b.coordinates[0]) {
+      return 1;
+    }
+
+    if (a.coordinates[1] < b.coordinates[1]) {
+      return -1;
+    }
+
+    if (a.coordinates[1] > b.coordinates[1]) {
+      return 1;
+    }
+
+    if (a.coordinates[2] < b.coordinates[2]) {
+      return -1;
+    }
+
+    if (a.coordinates[2] > b.coordinates[2]) {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  await setStorageByKey('obot-stored_coordinates', targets);
+}
+
+async function sortByScan() {
+  const targets = (await getStorageByKey('obot-stored_coordinates')) as Target[];
+  targets.sort((a, b) => a.lastscan - b.lastscan);
+
+  await setStorageByKey('obot-stored_coordinates', targets);
 }
