@@ -11,9 +11,28 @@
   box-shadow: 10px 10px 15px black;
 }
 
+/* #obot-spy-header {
+  padding: 5px;
+}
+
+#obot-spy-header > * {
+  padding: 0 10px;
+} */
+
+#obot-spy-header {
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+  margin: 5px;
+}
+
 #obot-spy-content {
   max-height: 75vh;
   overflow-y: scroll;
+}
+
+#obot-spy-target-status {
+  visibility: visible;
 }
 
 .obot-spy-btn {
@@ -45,11 +64,25 @@
   text-align: end;
 }
 
+#obot-spy-footer {
+  display: flex;
+  margin-top: 10px;
+}
+
+#obot-spy-events {
+  display: flex;
+  align-items: center;
+}
+
+#obot-spy-events > * {
+  padding: 0 5px;
+}
+
 #obot-spy-actions {
   display: flex;
+  flex-grow: 1;
   align-items: flex-end;
   justify-content: flex-end;
-  margin-top: 10px;
 }
 
 #obot-spy-actions > button {
@@ -67,4 +100,32 @@
 
 #obot-spy-actions > button:hover {
   background-position: -374px -287px;
+}
+
+.status_abbr_inactive {
+  color: #6e6e6e;
+}
+
+.status_abbr_active {
+  color: #fff;
+}
+
+.status_abbr_honorableTarget {
+  color: #ffff66;
+}
+
+.status_abbr_strong {
+  color: #f00;
+}
+
+.status_abbr_vacation {
+  color: aqua;
+}
+
+.status_abbr_noob {
+  color: lime;
+}
+
+.status_abbr_unknown {
+  color: blueviolet;
 }

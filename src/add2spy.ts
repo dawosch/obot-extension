@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import { Coordinates, getStorageByKey, setStorageByKey } from './helper/ChromeApi';
 import { containsCoordinates, startObservationForElement } from './helper/Generic';
-import { Target } from './interfaces/Target';
+import { Target, TargetStatus } from './interfaces/Target';
 
 startObservationForElement(async (m) => {
   const storedTargets = (await getStorageByKey('obot-stored_coordinates')) as Target[];
@@ -17,17 +17,26 @@ async function createSpyButton(message: HTMLElement, storedTargets: Target[]) {
     const searchParams = new URL($(message).find('div.msg_head > span.msg_title.blue_txt a').attr('href')!.toString()).searchParams;
     const coordinates = [searchParams.get('galaxy'), searchParams.get('system'), searchParams.get('position')].map((coord) => parseInt(coord!, 10));
     let player = $(message).find('span > div:nth-child(3) > span:nth-child(2)').text().trim();
+
     if (!player) {
       player = $(message).find('div.combatRightSide > span:nth-of-type(1)').text().split(':')[1].trim().replace('(', '').replace(')', '');
     }
-    const datetime = $(message).find('div.msg_head > span.fright > span').text().trim();
 
+    let status: TargetStatus = $(message).find('span > div:nth-child(3) > span:nth-child(2)').attr('class')?.trim() as TargetStatus;
+
+    if (!status) {
+      status = 'status_abbr_unknown';
+    }
+
+    console.log(status);
+
+    const datetime = $(message).find('div.msg_head > span.fright > span').text().trim();
     const datesplit = datetime.split(' ')[0].split('.');
     const timesplit = datetime.split(' ')[1];
 
     const date = new Date(`${datesplit[2]}/${datesplit[1]}/${datesplit[0]} ${timesplit}`);
 
-    const target: Target = { name: player, coordinates, lastscan: date.getTime() };
+    const target: Target = { name: player, status, coordinates, lastscan: date.getTime() };
     const coordinatesStored = containsCoordinates(storedTargets, coordinates);
     const span = $('<span></span>');
     span.addClass('icon_nf');

@@ -20,7 +20,7 @@ export function startObservationForElement(callback: MutationCallback) {
 
     const childObserver = new MutationObserver(callback);
     childObserver.observe(document.querySelector(`#ui-id-2 > #fleetsTab > div > div > div:nth-of-type(1)`)!, { childList: true });
-    childObserver.observe(document.querySelector(`#ui-id-2 > #fleetsTab > div > div > div:nth-of-type(2)`)!, { childList: true });
+    // childObserver.observe(document.querySelector(`#ui-id-2 > #fleetsTab > div > div > div:nth-of-type(2)`)!, { childList: true });
     // childObserver.observe(document.querySelector(`#ui-id-2 > #fleetsTab > div > div > div:nth-of-type(3)`)!, { childList: true });
     // childObserver.observe(document.querySelector(`#ui-id-2 > #fleetsTab > div > div > div:nth-of-type(4)`)!, { childList: true });
     // childObserver.observe(document.querySelector(`#ui-id-2 > #fleetsTab > div > div > div:nth-of-type(5)`)!, { childList: true });
